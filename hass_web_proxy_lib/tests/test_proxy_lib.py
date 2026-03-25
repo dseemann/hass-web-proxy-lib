@@ -32,6 +32,8 @@ from .utils import (
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
 
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
+
 
 async def test_proxy_view_http_success(
     hass: HomeAssistant,
@@ -188,7 +190,7 @@ async def test_proxy_view_aiohttp_read_error(
     mock_request.side_effect = aiohttp.ClientError
 
     with patch.object(
-        hass.helpers.aiohttp_client.async_get_clientsession(),
+        async_get_clientsession(hass),
         "request",
         new=mock_request,
     ):
